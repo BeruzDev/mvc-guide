@@ -15,7 +15,7 @@ Antes de comenzar, asegúrate de tener instalado:
 
 ### 1. Inicializar el proyecto con `pnpm`
 
-Para una mejor optimización de paquetes, usaremos `pnpm` en lugar de `npm` o `yarn`. Si no lo tienes instalado, ejecúta:
+Para una mejor optimización de paquetes, usaremos `pnpm` en lugar de `npm` o `yarn`. Si no lo tienes instalado, ejecuta:
 ```sh
 npm install -g pnpm
 ```
