@@ -15,7 +15,7 @@ Antes de comenzar, asegúrate de tener instalado:
 
 ### 1. Inicializar el proyecto con `pnpm`
 
-Para una mejor optimización de paquetes, usaremos `pnpm` en lugar de `npm` o `yarn`. Si no lo tienes instalado, ejecuta:
+Para una mejor optimización de paquetes, usaremos `pnpm` en lugar de `npm` o `yarn`. Si no lo tienes instalado, ejecúta:
 ```sh
 npm install -g pnpm
 ```
@@ -67,10 +67,123 @@ pnpm install cors
 
 ---
 
-### Siguientes pasos
-Con estos pasos iniciales completados, en las siguientes secciones configuraremos el servidor de Express y la estructura MVC del proyecto.
+### 5. Crear la estructura de carpetas MVC
+
+La arquitectura MVC se divide en tres partes principales:
+- **Modelos (`models/`)**: Contienen la lógica de negocio y la gestión de datos.
+- **Vistas (`views/`)**: Encargadas de la interfaz de usuario.
+- **Controladores (`controllers/`)**: Gestionan la lógica de la aplicación, reciben peticiones y responden usando los modelos.
+- **Middleware (`middleware/`)**: Contiene funciones de middleware personalizadas que se ejecutan durante el ciclo de solicitud/respuesta.
+- **Rutas (`routes/`)**: Definen los endpoints de la aplicación y especifican qué controladores deben manejar las solicitudes para cada ruta.
+
+Para crear la estructura de carpetas en la terminal, ejecuta:
+```sh
+mkdir models views controllers middleware routes
+```
+Esto generará las carpetas necesarias para organizar el código de manera modular y estructurada.
 
 ---
 
-Si tienes dudas o quieres contribuir, no dudes en hacer un **fork** del repositorio y enviar un **pull request**.
+### 6. Crear el archivo de entrada `app.js` y configurar el servidor
 
+Para poder arrancar el servidor, es necesario tener un archivo principal que centralice toda la configuración de la aplicación. Por ello, creamos el archivo `app.js` en la raíz del proyecto, donde configuraremos el servidor Express y definiremos la estructura base de la aplicación.
+
+Una alternativa es crear tres archivos de servidor, uno para cada tipo de base de datos con los que vamos a trabajar: local, MySQL y MongoDB.
+
+En la raíz del proyecto, crea tres archivos llamados `server_locale.js`, `server_mysql.js` y `server_mongodb.js`. Estos archivos serán responsables de inicializar la conexión con el tipo de base de datos correspondiente y de cargar el archivo `app.js`.
+
+Para poder iniciar la aplicación desde la terminal con comandos personalizados, podemos agregar scripts en el archivo `package.json` para cada tipo de servidor:
+
+```json
+"scripts": {
+  "start-locale": "node --watch server_locale.js",
+  "start-mysql": "node --watch server_mysql.js",
+  "start-mongodb": "node --watch server_mongodb.js"
+}
+```
+
+De esta manera, podrás arrancar el servidor simplemente escribiendo en la terminal:
+
+```sh
+  pnpm run start-locale  # Para usar la base de datos local
+  pnpm run start-mysql   # Para usar MySQL
+  pnpm run start-mongodb # Para usar MongoDB
+
+```
+
+### 7. Crear archivos en cada carpeta
+
+Para mantener la estructura del proyecto organizada, crearemos archivos en cada una de las carpetas que hemos generado:
+
+- **models**: Aquí definiremos nuestros modelos de datos. A partir del archivo `movies.json` generaremos las distintas bases de datos en los distintos formatos. Dentro de `models`, crearemos tres sub-carpetas para diferentes modelos de acceso a diferentes bases de datos:
+
+  - **local**: Para acceder a la información de forma local.
+    ```sh
+    mkdir -p models/local
+    touch models/local/local_model.js
+    ```
+  - **mysql**: Para base de datos MySQL.
+    ```sh
+    mkdir -p models/mysql
+    touch models/mysql/mysql_model.js
+    ```
+  - **mongodb**: Para una base de datos MongoDB.
+    ```sh
+    mkdir -p models/mongodb
+    touch models/mongodb/mongodb_model.js
+    ```
+
+- **views**: Aquí colocaremos nuestras vistas. La parte con la que el usuario interactúa, la interfaz.
+  ```sh
+  touch views/index.ejs
+	```
+
+- **controllers**: Aquí definiremos nuestros controladores. Por ejemplo, podemos crear un archivo `controller.js` para manejar la lógica relacionada con los usuarios.
+  ```sh
+  touch controllers/controller.js
+	```
+
+- **middleware:** Aquí colocaremos nuestras funciones de middleware personalizadas. Por ejemplo, podemos crear un archivo `auth_middleware.js` para manejar la autenticación.
+  ```sh
+  touch middleware/auth_middleware.js
+	```
+
+- **routes:** Aquí definiremos nuestras rutas. Por ejemplo, podemos crear un archivo `routes.js` para las rutas relacionadas con los usuarios.
+  ```sh
+  touch routes/routes.js
+	```
+
+Cada uno de estos archivos tendrá una funcionalidad específica que iremos desarrollando a medida que avanzamos en el proyecto.
+
+### 8. Configurar middleware en la aplicación
+
+Los **middlewares** en Express son funciones que se ejecutan antes de llegar a las rutas o controladores. Nos permiten realizar tareas como:
+- Autenticación y autorización.
+- Manejo de CORS (Cross-Origin Resource Sharing).
+- Registro de peticiones (logging).
+- Manejo de errores.
+- Parsing de datos (JSON, formularios, etc.).
+
+El middleware de CORS nos ayuda a controlar qué dominios pueden hacer peticiones a nuestro servidor. Lo definiremos en el archivo `middleware/auth_middleware.js` y lo importaremos en el archivo `app.js`.
+
+### 9. Definir las rutas (endpoints)
+
+Las rutas son la forma en que nuestra aplicación maneja las solicitudes HTTP. En este paso, las definiremos en el archivo `routes/routes.js` para definir los endpoints principales.
+
+### 10. Crear el controlador
+
+Los **controladores** son los encargados de manejar la lógica de nuestra aplicación.  
+Se comunican con los **modelos** para obtener o modificar datos y envían una respuesta al usuario.  
+
+En el archivo `controllers/controller.js`, definiremos las funciones que manejarán las solicitudes HTTP para nuestros datos.  
+
+### 11. Crear esquemas de datos
+
+Los **esquemas de datos** se utilizan para validar la información que recibimos en las peticiones antes de interactuar con los modelos. Esto nos ayuda a asegurarnos de que los datos sean correctos y tengan el formato adecuado.
+
+En este paso, vamos a utilizar la librería **Zod**, que es una herramienta sencilla y poderosa para crear esquemas de validación en JavaScript.
+
+- **Instalar la librería Zod:** 
+   ```sh
+   pnpm install zod
+  ```
