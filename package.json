@@ -4,10 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-locale": "node --watch server_locale.js",
+    "start-mysql": "node --watch server_mysql.js",
+    "start-mongodb": "node --watch server_mongodb.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "packageManager": "pnpm@10.4.1"
+  "packageManager": "pnpm@10.4.1",
+  "dependencies": {
+    "cors": "2.8.5",
+    "express": "4.21.2"
+  }
 }
