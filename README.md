@@ -236,3 +236,8 @@ Este paso es importante porque te permite tener control sobre cómo accedes a lo
 
 ---
 
+### 13. Modelo Local
+
+Para el modelo local generaremos una pequeña funcion en `models/localeFile/readJSON.js` para poder leer archivos JSON de un archivo. Ademas utilizaremos la libreria crypto de node para generar id aleatorias ya que no esta incorporado como en las bases de datos.
+
+### 14. Modelo MongoDB
