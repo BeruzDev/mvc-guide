@@ -111,6 +111,8 @@ De esta manera, podrás arrancar el servidor simplemente escribiendo en la termi
 
 ```
 
+---
+
 ### 7. Crear archivos en cada carpeta
 
 Para mantener la estructura del proyecto organizada, crearemos archivos en cada una de las carpetas que hemos generado:
@@ -155,6 +157,8 @@ Para mantener la estructura del proyecto organizada, crearemos archivos en cada 
 
 Cada uno de estos archivos tendrá una funcionalidad específica que iremos desarrollando a medida que avanzamos en el proyecto.
 
+---
+
 ### 8. Configurar middleware en la aplicación
 
 Los **middlewares** en Express son funciones que se ejecutan antes de llegar a las rutas o controladores. Nos permiten realizar tareas como:
@@ -166,24 +170,69 @@ Los **middlewares** en Express son funciones que se ejecutan antes de llegar a l
 
 El middleware de CORS nos ayuda a controlar qué dominios pueden hacer peticiones a nuestro servidor. Lo definiremos en el archivo `middleware/auth_middleware.js` y lo importaremos en el archivo `app.js`.
 
+---
+
 ### 9. Definir las rutas (endpoints)
 
 Las rutas son la forma en que nuestra aplicación maneja las solicitudes HTTP. En este paso, las definiremos en el archivo `routes/routes.js` para definir los endpoints principales.
+
+---
 
 ### 10. Crear el controlador
 
 Los **controladores** son los encargados de manejar la lógica de nuestra aplicación.  
 Se comunican con los **modelos** para obtener o modificar datos y envían una respuesta al usuario.  
 
-En el archivo `controllers/controller.js`, definiremos las funciones que manejarán las solicitudes HTTP para nuestros datos.  
+En el archivo `controllers/controller.js`, definiremos las funciones que manejarán las solicitudes HTTP para nuestros datos. 
+
+Crearemos una clase para manejar el controlador, las principales ventajas son:
+
+1. **Encapsulación**: Una clase permite encapsular toda la lógica relacionada con un recurso específico en un solo lugar. Esto hace que el código sea más modular y fácil de mantener.
+
+2. **Reutilización**: Al usar una clase, puedes crear múltiples instancias del controlador con diferentes modelos de datos. Esto es útil si tienes diferentes tipos de datos que necesitan ser manejados de manera similar, como haremos en nuestro caso.
+
+3. **Organización**: Las clases ayudan a organizar el código de manera más estructurada. Puedes definir métodos específicos para manejar diferentes tipos de solicitudes HTTP (GET, POST, PUT, DELETE) dentro de la clase.
+
+4. **Estado**: Una clase puede mantener el estado interno, lo que es útil si necesitas almacenar información que debe persistir entre diferentes métodos del controlador.
+
+---
 
 ### 11. Crear esquemas de datos
 
-Los **esquemas de datos** se utilizan para validar la información que recibimos en las peticiones antes de interactuar con los modelos. Esto nos ayuda a asegurarnos de que los datos sean correctos y tengan el formato adecuado.
+Cuando recibimos datos desde el frontend a través de las peticiones, es importante validarlos antes de enviarlos a la base de datos. Para hacer esto, podemos crear **esquemas de validación** que aseguren que los datos que llegan cumplen con el formato y las reglas que nuestro servidor espera.
 
-En este paso, vamos a utilizar la librería **Zod**, que es una herramienta sencilla y poderosa para crear esquemas de validación en JavaScript.
+Los **esquemas de datos** nos ayudan a verificar que la información recibida sea correcta, lo que previene errores al interactuar con los modelos y la base de datos.
+
+En este paso, utilizaremos la librería **Zod**, una herramienta sencilla y potente para crear esquemas de validación en JavaScript.
 
 - **Instalar la librería Zod:** 
    ```sh
    pnpm install zod
   ```
+
+---
+
+### 12. Crear los modelos
+
+Los **modelos** son la parte del proyecto que se encarga de comunicarse directamente con la base de datos. Gracias a los modelos, el controlador puede acceder a los datos y gestionarlos de manera adecuada. En este paso, vamos a crear tres tipos de modelos para interactuar con diferentes tipos de bases de datos.
+
+Vamos a usar tres tipos de bases de datos distintas:
+
+1. **Base de datos local**: En este caso, vamos a utilizar un archivo `movies.json` para almacenar los datos de forma local. La configuración de este modelo se realizará en el archivo `models/localFile/local_model.js`.
+
+2. **Base de datos MongoDB**: MongoDB es una base de datos NoSQL que guarda la información en un formato más flexible. En este caso, configuraremos el modelo en el archivo `models/mongodb/mongodb_model.js`.
+
+3. **Base de datos MySQL**: MySQL es una base de datos relacional que guarda la información en tablas estructuradas. El modelo para MySQL se configurará en el archivo `models/mysql/mysql_model.js`.
+
+Cada tipo de base de datos tiene sus características y formas de gestionar la información:
+
+- **Local**: Usamos este modelo cuando los datos se guardan en un archivo de texto, como el archivo `movies.json`. Es útil para trabajar con datos pequeños y simples, sin necesidad de configurar una base de datos externa.
+
+- **MongoDB**: Utilizamos este modelo cuando trabajamos con bases de datos NoSQL, como MongoDB. MongoDB es ideal cuando tenemos una estructura de datos más flexible, como documentos JSON, donde no necesitamos una estructura rígida de tablas.
+
+- **MySQL**: Este modelo es para bases de datos SQL como MySQL, donde los datos se organizan en tablas con relaciones entre ellas. Es más adecuado para proyectos que requieren integridad de datos, transacciones y relaciones entre entidades.
+
+Este paso es importante porque te permite tener control sobre cómo accedes a los datos en función del tipo de base de datos que utilices. Cada tipo de base de datos tiene su propia manera de organizar y almacenar la información, y al definir estos tres modelos, tu aplicación podrá trabajar con cualquiera de ellos de forma flexible.
+
+---
+
