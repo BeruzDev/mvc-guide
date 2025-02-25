@@ -240,4 +240,29 @@ Este paso es importante porque te permite tener control sobre cómo accedes a lo
 
 Para el modelo local generaremos una pequeña funcion en `models/localeFile/readJSON.js` para poder leer archivos JSON. Ademas utilizaremos la libreria crypto de node para generar id aleatorias ya que no esta incorporado como en las bases de datos.
 
+---
+
 ### 14. Modelo MongoDB
+
+MongoDB es una base de datos **NoSQL** orientada a documentos. A diferencia de las bases de datos relacionales como MySQL, en MongoDB los datos se almacenan en **colecciones** y cada registro es un **documento JSON** en lugar de una fila en una tabla.
+
+Estas son algunas de las ventajas de utilizar una base de datos NoSQL:
+
+- **Flexibilidad**: No requiere un esquema fijo, lo que permite almacenar datos estructurados de forma dinámica.
+- **Escalabilidad**: Está diseñado para manejar grandes volúmenes de datos y distribuirse en múltiples servidores.
+- **Rápida lectura y escritura**: Gracias a su estructura basada en documentos, permite acceder a los datos de manera eficiente.
+
+#### 🛠 Instalación y configuración
+Si aún no tienes instalado MongoDB en tu máquina, puedes seguir la guía oficial:  
+🔗 [Instalar MongoDB](https://www.mongodb.com/docs/manual/installation/)  
+
+Para desplegar un servidor de MongoDB en la nube, puedes utilizar **MongoDB Atlas**, un servicio gratuito de base de datos en la nube. Puedes seguir este video de Midudev donde explica cómo configurarlo paso a paso:  
+📺 [Cómo usar MongoDB Atlas](https://www.youtube.com/watch?v=8eJNLpRHumU)
+
+Ahora vamos a definir nuestro modelo en `models/mongodb/mongodb_model.js`.  
+
+Primero, necesitamos instalar **Mongoose**, una biblioteca que nos facilita la interacción con MongoDB en Node.js. Para instalarla, ejecuta:
+
+```sh
+pnpm install mongoose
+```
