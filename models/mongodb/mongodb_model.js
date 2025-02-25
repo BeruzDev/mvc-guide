@@ -31,6 +31,8 @@ async function connect() {
   }
 }
 
+console.log('✅ Conexión exitosa a MongoDB');
+
 //Creamos la clase MongoModel y por cada endpoint del archivo 'routes.js' creamos un método estático que se encargará de manejar la lógica de negocio
 export class MongoModel {
   static async getAll({ genre }) {//<- Método para obtener todas las películas

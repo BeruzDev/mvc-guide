@@ -3,7 +3,7 @@ import {randomUUID} from 'node:crypto' //Importamos la dependencia crypto para g
 import {readJSON} from './readJSON.js' //Importamos la función readJSON para leer el archivo JSON
 
 //Almacenamos en una constante el contenido del archivo movies.json
-const movies = readJSON('movies.json')
+const movies = readJSON('./movies.json')
 
 //Creamos la clase LocalModel y por cada endpoint del archivo 'routes.js' creamos un método estático que se encargará de manejar la lógica de negocio
 export class LocalModel {

@@ -17,7 +17,7 @@ export const createApp = ({ dataModel}) => {
 	app.use('/api', createRoute({ dataModel })) // <-/api es el primer endpoint y dentro de createRoutes están los endpoints específicos
 
 	// Asignamos el puerto a la aplicación
-	const port = process.env.PORT || 3000	// <- Si no hay puerto definido en las variables de entorno, usamos el puerto 3000
+	const port = process.env.PORT || 1234	// <- Si no hay puerto definido en las variables de entorno, usamos el puerto 1234
 
 	// Iniciamos la aplicación en el puerto definido y mostramos un mensaje en la consola
 	app.listen(port, () => {
