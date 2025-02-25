@@ -315,3 +315,43 @@ MYSQL_PUBLIC_URL=mysql://user:password@localhost:3306/moviesdb
 ```
 
 Recuerda que este archivo no esta subido a este repositorio, y que cada uno debe tener el suyo propio y asegurarse que en el archivo `.gitignore` esta incluido para evitar filtraciones de credenciales.
+
+---
+
+### 17. Probar los modelos
+
+Para probar las peticiones de nuestro servidor, podemos utilizar herramientas como **Postman**. Sin embargo, en este proyecto usaremos una extensión de Visual Studio Code llamada **REST Client**. Esta extensión permite realizar peticiones HTTP directamente desde un archivo dentro de VS Code, sin necesidad de usar aplicaciones externas.
+
+- Instalación de la extensión **REST Client**
+
+1. Abre **Visual Studio Code**.
+2. Ve a la pestaña de **Extensiones**.
+3. Busca **REST Client** en el buscador.
+4. Haz clic en **Instalar**.
+
+- Crear el archivo `api.http`
+
+Una vez instalada la extensión, vamos a crear un archivo en la raíz del proyecto llamado `api.http`. Este archivo nos permitirá definir y probar nuestras peticiones directamente desde VS Code. Es muy útil para verificar que nuestros puntos de entrada en el servidor están funcionando correctamente.
+
+---
+
+### 18. Probar cada Modelo
+
+En el paso anterior, creamos tres archivos en la raíz de nuestro proyecto que corresponden a las entradas de nuestro servidor para cada modelo: `server_locale.js`, `server_mongodb.js` y `server_mysql.js`. Para probar cada uno de estos modelos, debemos iniciar sus respectivos servidores desde la terminal.
+
+#### Pasos para arrancar los servidores:
+
+1. Primero, arrancamos el servidor correspondiente utilizando el siguiente comando:
+
+```sh
+pnpm run start-locale
+pnpm run start-mongodb
+pnpm run start-mysql
+```
+2. Después de iniciar cada servidor, abre el archivo api.http en Visual Studio Code. Dentro del archivo, verás los diferentes endpoints que hemos configurado para hacer las pruebas.
+
+3. Para enviar una solicitud, solo debes hacer clic en el hipervínculo 'Send Request' que aparece encima de cada petición en el archivo api.http.
+
+4. Al hacer clic en 'Send Request', la respuesta del servidor se mostrará en un panel dentro de Visual Studio Code.
+
+Si todo está configurado correctamente, por ejemplo, al hacer la primera petición (que podría ser para obtener todas las películas), deberías recibir una respuesta en formato JSON con todas las películas de la base de datos correspondiente al modelo con el que estés trabajando.
