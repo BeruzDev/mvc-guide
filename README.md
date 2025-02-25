@@ -256,7 +256,7 @@ Estas son algunas de las ventajas de utilizar una base de datos NoSQL:
 Si aún no tienes instalado MongoDB en tu máquina, puedes seguir la guía oficial:  
 🔗 [Instalar MongoDB](https://www.mongodb.com/docs/manual/installation/)  
 
-Para desplegar un servidor de MongoDB en la nube, puedes utilizar **MongoDB Atlas**, un servicio gratuito de base de datos en la nube. Puedes seguir este video de Midudev donde explica cómo configurarlo paso a paso:  
+Para desplegar un servidor de MongoDB en la nube, puedes utilizar **MongoDB Atlas**, un servicio gratuito de base de datos en la nube. Puedes seguir este video de **Midudev** donde explica cómo configurarlo paso a paso:  
 📺 [Cómo usar MongoDB Atlas](https://www.youtube.com/watch?v=8eJNLpRHumU)
 
 Ahora vamos a definir nuestro modelo en `models/mongodb/mongodb_model.js`.  
@@ -266,3 +266,52 @@ Primero, necesitamos instalar **Mongoose**, una biblioteca que nos facilita la i
 ```sh
 pnpm install mongoose
 ```
+
+Luego, crearemos nuestro modelo en el archivo mongodb_model.js y lo conectaremos con la base de datos.
+
+---
+
+### 15. Crear el archivo `.env` y agregarlo al archivo `.gitignore`
+
+Las **variables de entorno** son pares de clave-valor que pondremos dentro del archivo `.env` y que se utilizan para almacenar configuraciones sensibles, como contraseñas, claves API, direcciones de servidores o cualquier otro dato que no deba estar directamente en el código fuente. Esto es útil para evitar que estos datos sensibles sean compartidos en repositorios públicos o expuestos en el código.
+
+En Node.js, puedes usar estas variables de entorno para gestionar configuraciones que puedan cambiar según el entorno (producción, desarrollo, pruebas). De esta manera, puedes usar el mismo código en diferentes entornos sin exponer datos sensibles.
+
+- El archivo `.env` es un archivo de texto plano que almacena estas variables de entorno. Al tenerlas en este archivo, puedes cargarlas fácilmente dentro de tu aplicación sin tener que hardcodear valores sensibles en el código.
+
+Al crear este archivo, la idea es que el archivo **no** se suba a un repositorio público, ya que contiene datos sensibles, como las credenciales de la base de datos. Por ello, es importante **agregarlo al archivo `.gitignore`** para que no se suba a GitHub ni otros sistemas de control de versiones.
+
+- Dentro de tu proyecto, crea un archivo llamado `.env` en la raíz del proyecto. Este archivo contendrá las variables de entorno. Se vera algo asi como:
+
+```ini
+MONGODB_URI=mongodb+srv://usuario:contraseña@cluster.mongodb.net/nombre_basedatos?retryWrites=true&w=majority
+```
+
+Cuando desplegamos nuestra base de datos en MongoDB Atlas, en el proceso te proporcionan la **MONGODB_URI**, que es la que deberemos poner el el archivo `.env`.
+
+---
+
+### 16. Crear el modelo MySQL
+
+En esta sección, vamos a configurar la conexión con la base de datos MySQL y crear el modelo necesario para interactuar con los datos de las películas. Vamos a usar el paquete `mysql2/promise` para conectarnos a MySQL de manera asincrónica.
+
+Primero, necesitas instalar el paquete `mysql2` para poder conectarte a la base de datos MySQL:
+
+```bash
+pnpm install mysql2
+```
+
+Despues configuraremo0s el modelo en el archivo `models/mysql/mysql_model.js`.
+
+Si necesitas ver cómo desplegar una base de datos MySQL, puedes seguir este video de **Midudev** que explica paso a paso cómo hacerlo:
+
+📺 [Cómo desplegar una base de datos MySQL](https://www.youtube.com/watch?v=96s2i-H7e0w)
+
+Necesitaremos manejar las credenciales de manera segura, igual que para MongoDB, en el archivo `.env` de la raiz de nuestro proyecto deberemos agregar la url publica para la bbdd MySQL, podria verse algo como esto:
+
+```ini
+MONGODB_URI=mongodb+srv://usuario:contraseña@cluster.mongodb.net/nombre_basedatos?retryWrites=true&w=majority
+MYSQL_PUBLIC_URL=mysql://user:password@localhost:3306/moviesdb
+```
+
+Recuerda que este archivo no esta subido a este repositorio, y que cada uno debe tener el suyo propio y asegurarse que en el archivo `.gitignore` esta incluido para evitar filtraciones de credenciales.
