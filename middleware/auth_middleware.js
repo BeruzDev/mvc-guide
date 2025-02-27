@@ -3,8 +3,9 @@ import cors from 'cors';
 
 //Podemos definir los orígenes permitidos en una constante
 const ACCEPTED_ORIGINS = [
-  'http://localhost:3000', // <- Nuestro puerto de desarrollo
-	'https://myfrontend.com', // <- Nuestro frontend en producción//!cambiar cuando deployee el front
+  'http://localhost:1234', // <- Nuestro backend de desarrollo
+  'http://127.0.0.7:5500', // <- Nuestro frontend de desarrollo
+	'https://myfrontend.com', // <- Nuestro frontend en producción
 ];
 
 // Definimos el middleware de cors
@@ -20,3 +21,8 @@ export const corsMiddleware = ({ acceptedOrigins = ACCEPTED_ORIGINS } = {}) =>
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'], //<- Métodos permitidos
     allowedHeaders: ['Content-Type'], // <- Cabeceras permitidas
   });
+
+  //Esto permite que cualquier origen pueda acceder
+  // export const corsMiddleware = cors({
+  //   origin: '*'
+  // })
