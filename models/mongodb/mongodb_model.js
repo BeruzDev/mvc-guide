@@ -31,7 +31,7 @@ async function connect() {
   }
 }
 
-console.log('✅ Conexión exitosa a MongoDB');
+console.log('✅ Conexión exitosa a MongoDB')
 
 //Creamos la clase MongoModel y por cada endpoint del archivo 'routes.js' creamos un método estático que se encargará de manejar la lógica de negocio
 export class MongoModel {
@@ -80,14 +80,24 @@ export class MongoModel {
     const db = await connect()
     const objectId = new ObjectId(id)//<- Convertimos el id en un ObjectId
 
-    const { ok, value } = await db.findOneAndUpdate(//<- Buscamos la película por id y la actualizamos
+    console.log('Input:', input);
+    console.log('ObjectId:', objectId);
+
+    const result = await db.findOneAndUpdate(//<- Buscamos la película por id y la actualizamos
       { _id: objectId },//<- Buscamos la película por id
       { $set: input },//<- Actualizamos la película
-      { returnNewDocument: true }//<- Devolvemos la película actualizada
+      { returnDocument: 'after' }//<- Devolvemos la película actualizada
     )
 
-    if (!ok) return false//<- Si no se actualiza la película devolvemos false
+    console.log('Result:', result);
 
-    return value//<- Devolvemos la película actualizada
+    if (!result.ok) {
+      console.error('Update failed:', result);
+      return false; // Si no se actualiza la película devolvemos false
+    }
+
+    console.log('Updated movie:', result.value);
+
+    return result.value//<- Devolvemos la película actualizada
   }
 }

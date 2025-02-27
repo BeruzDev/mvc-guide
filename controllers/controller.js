@@ -1,4 +1,5 @@
 //Importamos la función de validación de datos
+import { validateData, validatePartialData } from '../schemas/validationSchema.js' //<- importamos la función de validación de datos
 
 //Creamos una clase 'Controller' que se instanciara cada vez que se haga una petición a la API
 export class Controller {
@@ -18,7 +19,7 @@ export class Controller {
 
   getById = async (req, res) => {
     const { id } = req.params //<- extraemos el id de los parametros de la petición
-    const data = await this.dataModel.getById(id) //<- llamamos al modelo de datos y le pasamos el id por parametro
+    const data = await this.dataModel.getById({ id }) //<- llamamos al modelo de datos y le pasamos el id por parametro
     if (data) return res.json(data) //<- si hay datos devolvemos la respuesta en formato json
     res.status(404).json({ message: 'Movie not found' }) //<- si no hay datos devolvemos un estado 404
   }
@@ -27,25 +28,25 @@ export class Controller {
     //Al recibir datos, primero los validamos pasandolos por el schema de validación, '/schemas/validationSchema.js'
     const dataBody = validateData(req.body) // <- Recogemos los datos del cuerpo de la petición y se los pasamos a la funcion de validación
     if (!dataBody.success) //<- Si la comparacion NO es correcta devolvemos un estado 400 con el mensaje de error
-      return res.status(400).json({ message: dataBody.error.errors[0].message }) 
-    const newData = await this.dataModel.create({ input: dataBody.newData }) // <- Si la comparacion es correcta, llamamos al modelo de datos y creamos un nuevo registro con los datos validados
+      return res.status(400).json({ error: JSON.parse(result.error.message) }) 
+    const newData = await this.dataModel.create({ input: dataBody.data }) // <- Si la comparacion es correcta, llamamos al modelo de datos y creamos un nuevo registro con los datos validados
 		res.status(201).json(newData) //<- Devolvemos un estado 201 con los datos del nuevo registro
 	}
 
 	delete = async (req, res) => {
     const { id } = req.params //<- extraemos el id de los parametros de la petición
-    const data = await this.movieModel.delete({ id })//<- llamamos al modelo de datos y le pasamos el id por parametro
+    const data = await this.dataModel.delete({ id })//<- llamamos al modelo de datos y le pasamos el id por parametro
     if (data === false) //<- si no hay datos devolvemos un estado 404
       return res.status(404).json({ message: 'Movie not found' })
     return res.json({ message: 'Movie deleted' }) //<- si hay datos devolvemos un mensaje con una respuesta en formato json
   }
 
 	update = async (req, res) => {
-    const data = validatePartialMovie(req.body) // <- Recogemos los datos del cuerpo de la petición y se los pasamos a la funcion de validación, en este caso al ser solamente una actualización parcial, usamos la función de validación parcial
+    const data = validatePartialData(req.body) // <- Recogemos los datos del cuerpo de la petición y se los pasamos a la funcion de validación, en este caso al ser solamente una actualización parcial, usamos la función de validación parcial
     if (!data.success) //<- Si la comparacion NO es correcta devolvemos un estado 400 con el mensaje de error
       return res.status(400).json({ error: JSON.parse(data.error.message) })
     const { id } = req.params //<- extraemos el id de los parametros de la petición
-    const updatedData = await this.movieModel.update({ id, input: data.data })
+    const updatedData = await this.dataModel.update({ id, input: data.data })
     return res.json(updatedData) //<- Devolvemos un estado 200 con los datos actualizados
   }
 }
