@@ -80,24 +80,13 @@ export class MongoModel {
     const db = await connect()
     const objectId = new ObjectId(id)//<- Convertimos el id en un ObjectId
 
-    console.log('Input:', input);
-    console.log('ObjectId:', objectId);
-
     const result = await db.findOneAndUpdate(//<- Buscamos la película por id y la actualizamos
       { _id: objectId },//<- Buscamos la película por id
       { $set: input },//<- Actualizamos la película
       { returnDocument: 'after' }//<- Devolvemos la película actualizada
     )
-
-    console.log('Result:', result);
-
-    if (!result.ok) {
-      console.error('Update failed:', result);
-      return false; // Si no se actualiza la película devolvemos false
-    }
-
-    console.log('Updated movie:', result.value);
-
-    return result.value//<- Devolvemos la película actualizada
+    if (!result) return false; // Si no se actualiza la película devolvemos false
+    
+    return result//<- Devolvemos la película actualizada
   }
 }
