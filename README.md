@@ -356,6 +356,6 @@ pnpm run start-mysql
 
 Si todo está configurado correctamente, por ejemplo, al hacer la primera petición (que podría ser para obtener todas las películas), deberías recibir una respuesta en formato JSON con todas las películas de la base de datos correspondiente al modelo con el que estés trabajando.
 
-### View
+### 19. View
 
 Crearemos una vista sencilla de las peliculas de nuestras bases de datos en `view/index.html`, al iniciar cualquiera de los tres servidores podremos navegar a nuestra vista en nuestro buscador y ver nuestro frontend.
